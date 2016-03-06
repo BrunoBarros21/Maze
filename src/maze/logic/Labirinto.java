@@ -88,7 +88,7 @@ public class Labirinto
 	{
 		return hero.getY();
 	}
-	//------------------------------------
+	//-------------------------------------
 	public char[][] geraLabirinto()
 	{
 		char labirinto[][] = new char[10][10];
