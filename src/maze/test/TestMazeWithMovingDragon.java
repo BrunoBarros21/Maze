@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 import maze.logic.*;
-import maze.logic.Labirinto.GameState;
+import maze.logic.Maze.GameState;
 
 public class TestMazeWithMovingDragon {
 

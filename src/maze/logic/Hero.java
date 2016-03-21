@@ -1,11 +1,11 @@
 package maze.logic;
-public class Heroi 
+public class Hero 
 {
 	private int x;
 	private int y;
 	private boolean espada;
 	
-	public Heroi(int x,int y)
+	public Hero(int x,int y)
 	{
 		this.x = x;
 		this.y = y;
@@ -30,7 +30,7 @@ public class Heroi
 		espada = true;
 	}
 	
-	public void movimenta(char direcao)
+	public void move(char direcao)
 	{
 		if (direcao == 'a')
 			y--;

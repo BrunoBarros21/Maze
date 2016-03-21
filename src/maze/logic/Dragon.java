@@ -33,7 +33,7 @@ public class Dragon {
 		alive=false;
 	}
 	//-----------------------------------
-	public void movimenta(char direcao){
+	public void move(char direcao){
 		if (direcao == 'a')
 			y--;
 		if (direcao == 's')

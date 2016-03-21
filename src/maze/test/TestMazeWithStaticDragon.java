@@ -1,9 +1,9 @@
-package maze.test;
+/*package maze.test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 import maze.logic.*;
-import maze.logic.Labirinto.GameState;
+import maze.logic.Maze.GameState;
 
 public class TestMazeWithStaticDragon {
 	char[][] m1 = { { 'X', 'X', 'X', 'X', 'X' },
@@ -14,7 +14,7 @@ public class TestMazeWithStaticDragon {
 
 	@Test
 	public void testMoveHeroToFreeCell() {
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('a');
@@ -24,16 +24,16 @@ public class TestMazeWithStaticDragon {
 
 	@Test
 	public void testHeroDies() {
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(false, maze.getHeroArmed());
 		maze.movimentaHeroi('s');
-		maze.checkDragonPosition();
+		maze.checkAllDragonsPositions();;
 		assertEquals(GameState.DRAGON_WIN, maze.getGameState());
 	}
 	
 	@Test
 	public void moveToWall(){
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('w');
@@ -43,7 +43,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void moveToSword(){
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('a');
@@ -57,7 +57,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void moveToKillDragon(){
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('a');
@@ -65,13 +65,13 @@ public class TestMazeWithStaticDragon {
 		maze.movimentaHeroi('s');
 		maze.movimentaHeroi('s');
 		maze.movimentaHeroi('d');
-		maze.checkDragonPosition();
-		assertEquals(false, maze.getDragonLifeState());
+		maze.checkAllDragonsPositions();;
+		assertEquals(true, maze.checkAllDragonsLife());
 	}
 	
 	@Test
 	public void HeroRun(){
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('a');
@@ -79,7 +79,7 @@ public class TestMazeWithStaticDragon {
 		maze.movimentaHeroi('s');
 		maze.movimentaHeroi('s');
 		maze.movimentaHeroi('d');
-		maze.checkDragonPosition();
+		maze.checkAllDragonsPositions();
 		maze.movimentaHeroi('d');
 		maze.movimentaHeroi('w');
 		maze.movimentaHeroi('w');
@@ -89,7 +89,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void testExitFail() {
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('d');
@@ -99,7 +99,7 @@ public class TestMazeWithStaticDragon {
 	
 	@Test
 	public void moveToExitWithSwordButDragonAlive(){
-		Labirinto maze = new Labirinto(m1);
+		Maze maze = new Maze(m1);
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 		maze.movimentaHeroi('a');
@@ -119,4 +119,4 @@ public class TestMazeWithStaticDragon {
 		assertEquals(1, maze.getHeroX());
 		assertEquals(3, maze.getHeroY());
 	}
-}
+}*/
