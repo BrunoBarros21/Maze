@@ -2,8 +2,11 @@ package maze.logic;
 
 import java.util.ArrayDeque;
 import java.util.Random;
-import java.util.Scanner;
-
+/**
+ * MazeGenerator.java-Class responsible for generate a random labirinth according to the size and number of dragons given.
+ * @author Jose
+ *
+ */
 public class MazeGenerator {
 
 	private int x, y, xB, yB;
@@ -14,8 +17,19 @@ public class MazeGenerator {
 	private Random rand = new Random();
 	private Point heroPos,swordPos,dragonPos;
 	private int numDragons;
-
+	/**
+	 * Costructor that receive's the size of the labirinth and the number of dragons.
+	 * @param h A Int data type.
+	 * @param w A Int data type.
+	 * @param numDragons A Int data type.
+	 */
 	public MazeGenerator(int h,int w,int numDragons){
+		
+		if((h < 5 && w < 5) || (h>23 && w>23))
+			throw new IllegalArgumentException();
+		if(numDragons>4 || numDragons<1)
+			throw new IllegalArgumentException();
+			
 		this.x=rand.nextInt(w);
 		this.y=rand.nextInt(h);
 		width=w;
@@ -26,6 +40,10 @@ public class MazeGenerator {
 		this.numDragons=numDragons;
 	}
 //-----------------------------------------------
+	/**
+	 * Verify if all cells were visited.
+	 * @return A Boolean data type.
+	 */
 	public boolean fullB()
 	{
 		for(int i = 0; i < b.length; i++)
@@ -38,7 +56,10 @@ public class MazeGenerator {
 		}
 		return true;
 	}
-
+	/**
+	 * Verify if is possible to move to any cell or is necessary to go back.
+	 * @return A Boolean data type.
+	 */
 	public boolean haveNeighbours()
 	{
 		if (xB != 0)
@@ -68,7 +89,10 @@ public class MazeGenerator {
 		return false;
 
 	}
-
+	/**
+	 * Generates a random direction. Returns true if was possible to move, otherwise returns false.
+	 * @return A Boolean data type.
+	 */
 	public boolean generateDirection()
 	{
 		boolean end = false;
@@ -136,7 +160,9 @@ public class MazeGenerator {
 		}
 		return end;
 	}
-
+	/**
+	 * Function that build all the maze.
+	 */
 	public void buildMaze(){
 		ArrayDeque<Point> stack = new ArrayDeque<Point>();
 
@@ -160,7 +186,9 @@ public class MazeGenerator {
 			}
 		}
 	}
-	
+	/**
+	 * Initialize the structure of the maze.
+	 */
 	public void fillMaze() {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[i].length; j++) {
@@ -177,7 +205,9 @@ public class MazeGenerator {
 			}
 		}
 	}
-
+	/**
+	 * Display the maze.
+	 */
 	public void displayMaze() {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[i].length; j++) {
@@ -187,7 +217,9 @@ public class MazeGenerator {
 		}
 		System.out.println("");
 	}
-
+	/**
+	 * Generates a random exit in the maze.
+	 */
 	public void makeExit(){
 
 		Random r=new Random();
@@ -251,11 +283,17 @@ public class MazeGenerator {
 			b[xB][yB] = true;
 		}
 	}
-	
+	/**
+	 * Retrieve the structure of the maze.
+	 * @return A Char[][] data type.
+	 */
 	public char[][] getMaze(){
 		return maze;
 	}
 	//------------------------------------------
+	/**
+	 * Place all the caracters(hero,sword and dragons) in the maze.
+	 */
 	public void placeCaracters(){
 		placeSword();
 		for(int i=0;i<numDragons;i++){
@@ -263,7 +301,9 @@ public class MazeGenerator {
 		}
 		placeHero();
 	}
-	
+	/**
+	 * Place the hero in the maze.
+	 */
 	public void placeHero(){
 		int x = 0;
 		int y = 0;
@@ -272,13 +312,15 @@ public class MazeGenerator {
 				x = rand.nextInt(height - 2) + 1;
 				y = rand.nextInt(width - 2) + 1;
 			} while (maze[x][y] != ' ');
-		} while (!HeroToSword(x, y));
+		} while (!HeroToSword(x, y) && checkIfHeroAround(x,y));
 
 		maze[x][y] = 'H';
 		heroPos = new Point(x, y);
 		
 	}
-	
+	/**
+	 * Place the dragons in the maze.
+	 */
 	public void placeDragon(){
 		int x = 0;
 		int y = 0;
@@ -291,7 +333,9 @@ public class MazeGenerator {
 		dragonPos = new Point(x, y);
 
 	}
-	
+	/**
+	 * Place the sword in the maze.
+	 */
 	public void placeSword(){
 		int x=0;
 		int y=0;
@@ -305,7 +349,12 @@ public class MazeGenerator {
 		swordPos = new Point(x,y);
 		
 	}
-	
+	/**
+	 * Verify if the hero is side by side with the dragon with coordinates (x,y).
+	 * @param x A Int variable type.
+	 * @param y A Int variable type.
+	 * @return A Boolean data type.
+	 */
 	public boolean checkIfHeroAround(int x, int y) {
 		if (x > 1 && x < height && y > 1 && y < width) {
 			if (maze[x - 1][y] == 'H')
@@ -320,7 +369,9 @@ public class MazeGenerator {
 
 		return true;
 	}
-	
+	/**
+	 * Call all the functions to build the maze.
+	 */
 	public void startMaze(){
 		fillMaze();
 		fillVisitedMaze();
@@ -328,7 +379,9 @@ public class MazeGenerator {
 		buildMaze();
 		placeCaracters();
 	}
-	
+	/**
+	 * Fill the attribute responsible to verify if a cell was visited or not.
+	 */
 	public void fillVisitedMaze(){
 		for(int i=0;i<visited.length;i++){
 			for(int j=0;j<visited[i].length;j++)
@@ -337,7 +390,12 @@ public class MazeGenerator {
 			}
 		}
 	}
-
+	/**
+	 * Verify if Hero can reach the sword from the initial position.
+	 * @param x A Int variable type.
+	 * @param y A Int variable type.
+	 * @return  A Boolean data type.
+	 */
 	public boolean HeroToSword(int x,int y){
 		
 		if(maze[x][y]=='E')

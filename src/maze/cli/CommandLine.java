@@ -21,10 +21,17 @@ public class CommandLine {
 		System.out.println(" 3 - Random directioned and sleepy Dragon\n");
 		System.out.println("Choose the game mode:\n");
 		mode = info.nextInt();
+		do{
 		System.out.println("Choose the size of the maze:");
-		size=info.nextInt();
+		size=info.nextInt();}
+		while(size < 5 || size > 23);
 		System.out.println("How many dragons you want?");
 		numDragons=info.nextInt();
+		
+		if(size % 2 == 0)
+			size++;
+		
+		
 	}
 	
 	public void endGame(GameState state){

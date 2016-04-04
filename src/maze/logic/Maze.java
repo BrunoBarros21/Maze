@@ -1,12 +1,18 @@
 package maze.logic;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
 
+/**
+ * Maze.java-Class responsible for the logic and the structure of the maze game.
+ * @author José Monteiro and Bruno Barros.
+ *
+ */
+public class Maze implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-public class Maze 
-{	
 	public enum GameState{PLAYING,DRAGON_WIN,HERO_WIN};
 	public enum GameMode{STATIC,MOVE,MOVE_AND_SLEEP};
 
@@ -17,7 +23,10 @@ public class Maze
 	private Exit exit;
 	private GameState state;
 	private GameMode mode;
-
+	/**
+	 * Costructor of the class that receive the structure of the maze and the initial positions of the objects.
+	 * @param m A Char variable type.
+	 */
 	public Maze(char [][] m)
 	{
 		for(int i = 0; i < m.length; i++)
@@ -48,40 +57,121 @@ public class Maze
 
 
 	//GET'S-------------------------------
+	/**
+	 * Retrieve the "Exit" object.
+	 * @return A Exit data type.
+	 */
+	public Exit getExit(){
+		return exit;
+	}
+	/**
+	 * Retrieve the "Sword" object.
+	 * @return A Sword data type.
+	 */
+	public Sword getSword(){
+		return sword;
+	}
+	/**
+	 * Retrieve the state of the game (Playing, Hero win or Hero loose).
+	 * @return A Enum data type.
+	 */
 	public GameState getGameState(){
 		return state;
 	}
+	/**
+	 * Retrieve the life state of the dragon passed as parameter.
+	 * @param dragon A Dragon variable type.
+	 * @return A Boolean data type.
+	 */
 	public boolean getDragonLifeState(Dragon dragon){
 		return dragon.getLifeState();
 	}
+	/**
+	 * Retrieve the mode (sleeping or awake) of the dragon passed as parameter.
+	 * @param dragon A Dragon variable type.
+	 * @return A Boolean data type.
+	 */
 	public boolean getDragonSleep(Dragon dragon){
 		return dragon.getSleep();
 	}
+	/**
+	 * Retrieve the state of the hero (armed or unarmed).
+	 * @return A Boolean data type.
+	 */
 	public boolean getHeroArmed()
 	{
 		return hero.getEspada();
 	}
+	/**
+	 * Retrieve the hero x coordinates in the maze.
+	 * @return A Int data type.
+	 */
 	public int getHeroX()
 	{
 		return hero.getX();
 	}
+	/**
+	 * Retrieve the hero y coordinates in the maze.
+	 * @return A Int data type.
+	 */
 	public int getHeroY()
 	{
 		return hero.getY();
 	}
+	/**
+	 * Retrieve the hero object of the maze.
+	 * @return A Hero data type.
+	 */
+	public Hero getHero(){
+		return hero;
+	}
+	/**
+	 * Retrieve the game mode (static dragon, moving dragon and sleepy and moving dragon).
+	 * @return A Enum data type.
+	 */
 	public GameMode getMode(){
 		return mode;
 	}
+	/**
+	 * Retrieve the dragons of the maze.
+	 * @return A LinkedList data type.
+	 */
+	public LinkedList<Dragon> getDragons(){
+		return dragons;
+	}
+	/**
+	 * Retrieve the maze structure.
+	 * @return A Char[][] data type.
+	 */
+	public char[][] getLabirinth(){
+		return labirinth;
+	}
 	//-------------------------------------
+	/**
+	 * Changes the cell with coordinates x,y to the cell C.
+	 * @param x A Int data type.
+	 * @param y A Int data type.
+	 * @param c A Char data type.
+	 */
+	public void setALabirinthPosition(int x, int y, char c){
+		labirinth[x][y] = c;
+	}
+	/**
+	 * Set the game mode (static dragon,moving dragon and sleeping and moving dragon) of the current maze.
+	 * @param t A Int variable type.
+	 */
 	public void setMode(int t){
 		if(t==0)
 			mode=GameMode.STATIC;
 		else if(t==1)
 			mode=GameMode.MOVE;
-		else if(t==2)
+		else 
 			mode=GameMode.MOVE_AND_SLEEP;
 	}
-	
+	/**
+	 * This function is responsible for all the conditions to move the hero. It receive a direction as a parameter and verify if the direction is a valid one. If is a valid direction it actualize the cells of the maze according to the move that was made.
+	 * @param direction A variable of type char.
+	 */
 	public void moveHero(char direction)
 	{
 		if (direction == 'a')
@@ -212,9 +302,15 @@ public class Maze
 			}
 		}
 		if(checkAllDragonsLife() && hero.getX() == exit.getX() && hero.getY() == exit.getY())
+		{
+			exit.setHeroOut();
 			state=GameState.HERO_WIN;
+		}
 	}
-
+	/**
+	 * This function is responsible for all the conditions to move the dragon. It uses the function getRandomDirection() to get a direction and then verify's if that direction is a valid one for the specific dragon. If it is valid the dragon is moved and the cells are actualized according to the move that was made.
+	 * @param dragon A variable of type Dragon.
+	 */
 	public 	void moveDragon(Dragon dragon){
 		boolean gotDir=false;
 
@@ -258,7 +354,7 @@ public class Maze
 					}
 					else if(labirinth[dragon.getX()][dragon.getY() - 1] == 'A')
 					{
-						//labirinth[exit.getX()][exit.getY()] = ' ';
+						labirinth[dragon.getX()][dragon.getY()] = ' ';
 						dragon.setDragonLife();
 						gotDir=true;
 					}
@@ -299,7 +395,7 @@ public class Maze
 					}
 					else if(labirinth[dragon.getX()+1][dragon.getY()] == 'A')
 					{
-						//labirinth[exit.getX()][exit.getY()] = ' ';
+						labirinth[dragon.getX()][dragon.getY()] = ' ';
 						dragon.setDragonLife();
 						gotDir=true;
 					}
@@ -340,6 +436,7 @@ public class Maze
 					}
 					else if(labirinth[dragon.getX()][dragon.getY() + 1] == 'A')
 					{
+						labirinth[dragon.getX()][dragon.getY()] = ' ';
 						dragon.setDragonLife();
 						gotDir=true;
 					}
@@ -381,7 +478,7 @@ public class Maze
 					}
 					else if(labirinth[dragon.getX()-1][dragon.getY()] == 'A')
 					{
-						//labirinth[exit.getX()][exit.getY()] = ' ';
+						labirinth[dragon.getX()][dragon.getY()] = ' ';
 						dragon.setDragonLife();
 						gotDir=true;
 					}
@@ -389,19 +486,30 @@ public class Maze
 			}
 		}
 	}
-
-	public void updateSleepDragon(Dragon dragon){
+	/**
+	 * Update the mode (sleep or awake) of the dragon passed as parameter. The mode is switched by generating a random number between 0 and 3, if the number is 1 the dragon passes to sleep mode else passes to mode awake. Retrieve true if dragon was set to sleep otherwise retrieve false.
+	 * @param dragon A Dragon variable type.
+	 * @return A Boolean data type.
+	 */
+	public boolean updateSleepDragon(Dragon dragon){
 		Random rand=new Random();
 
 		int num=rand.nextInt(4);
 
-		if(num==1)
+		if(num==1){
 			dragon.setSleep(true);
-		else
+			return true;
+			}
+		else{
 			dragon.setSleep(false);
+			return false;
+		}
 
 	}
-
+	/**
+	 * Generates a random number between 0 and 3 to make a random direction to the dragons.
+	 * @return A Char data type.
+	 */
 	public char getRandomDirection(){
 		Random r=new Random();
 
@@ -427,7 +535,10 @@ public class Maze
 		}
 		return dir;
 	}
-
+	/**
+	 * Verify if the dragon passed as a parameter is near to the hero.
+	 * @param dragon A variable of type Dragon.
+	 */
 	public void checkDragonPosition(Dragon dragon) {
 		if (dragon.getLifeState()) {
 			if (!(hero.getEspada())) {
@@ -458,14 +569,24 @@ public class Maze
 		}
 
 	}
-
+	/**
+	 * Update the symbol of the dragon in case of he is in sleep mode.
+	 * @param dragon A Dragon variable type.
+	 */
 	public void adormeceDragao(Dragon dragon) {
-		if (labirinth[dragon.getX()][dragon.getY()] == 'D')
+		if (labirinth[dragon.getX()][dragon.getY()] == 'D'){
 			labirinth[dragon.getX()][dragon.getY()] = 'd';
-		else if (labirinth[dragon.getX()][dragon.getY()] == 'F')
+			dragon.setSleep(true);
+			}
+		else if (labirinth[dragon.getX()][dragon.getY()] == 'F'){
 			labirinth[dragon.getX()][dragon.getY()] = 'f';
+			dragon.setSleep(true);
+		}
 	}
-
+	/**
+	 * Verify the life state of all dragons, return true if all the dragons are dead, otherwise return false.
+	 * @return A Boolean data type.
+	 */
 	public boolean checkAllDragonsLife(){
 
 		for(Iterator<Dragon> iterator=dragons.iterator();iterator.hasNext();)
@@ -476,7 +597,9 @@ public class Maze
 		labirinth[exit.getX()][exit.getY()]=' ';
 		return true;
 	}
-
+	/**
+	 * Update the position of all dragons.
+	 */
 	public void moveAllDragons(){
 		if (mode == GameMode.MOVE)
 		{
@@ -504,28 +627,35 @@ public class Maze
 			}
 		}
 	}
-
+	/**
+	 * Verify if the hero is side by side with any dragon.
+	 */
 	public void checkAllDragonsPositions(){
 		for(Iterator<Dragon> iterator=dragons.iterator();iterator.hasNext();)
 		{
 			checkDragonPosition(iterator.next());
 		}
 	}
-
+	/**
+	 * Update the mode (sleep or awake) of all dragons.
+	 */
 	public void updateAllSleepDragons(){
 		for(Iterator<Dragon> iterator=dragons.iterator();iterator.hasNext();)
 		{
 			updateSleepDragon(iterator.next());
 		}
 	}
-	
+	/**
+	 * Call all the update functions related to the dragons (move,sleep and collisions functions).
+	 */
 	public void updateDragons(){
 			moveAllDragons();
 			updateAllSleepDragons();
 			checkAllDragonsPositions();
 			checkAllDragonsLife();
 	}
-
+	
+	@Override
 	public String toString()
 	{
 		String s = "";

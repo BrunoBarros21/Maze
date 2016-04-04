@@ -4,7 +4,11 @@ package maze.logic;
 import maze.cli.CommandLine;
 import maze.logic.Maze.GameMode;
 import maze.logic.Maze.GameState;
-
+/**
+ * Logic.java-A Class developed to make the initial game with the command line.
+ * @author José Monteiro and Bruno Barros.
+ *
+ */
 public class Logic {
 	private Maze maze;
 	private CommandLine cli;
@@ -14,13 +18,17 @@ public class Logic {
 					{ 'X', 'X','X', ' ', 'X' },
 					{ 'X', 'D',' ', 'H', 'X' },
 					{ 'X', 'X','X', 'X', 'X' } };
-
+	/**
+	 * Constructor that initialize the command line object.
+	 */
 	public Logic(){
 		
 		//maze=new Maze(m1);
 		cli=new CommandLine();
 	}
-
+	/**
+	 * Function where all the logic was build using the command line.
+	 */
 	public void play(){
 		
 		char dir;
